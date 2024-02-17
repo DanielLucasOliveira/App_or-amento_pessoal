@@ -20,10 +20,10 @@
 
 </head>
 
-<body onload="carregarListaDespesas()">
 
+<body class="bg-secondary" onload="carregarListaDespesas()">
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
     <div class="container">
       <a class="navbar-brand" href="#">
         <img src="/img/logo.png" width="50" height="35" alt="Orçamento pessoal">
@@ -86,7 +86,7 @@
 
       <div class="col-md-6">
         <select class="form-control" id="tipo">
-          <option value="">Tipo</option>
+          <option>Tipo</option>
           <option value="1">Alimentação</option>
           <option value="2">Educação</option>
           <option value="3">Lazer</option>
@@ -114,7 +114,7 @@
 
     <div class="row">
       <div class="col">
-        <table class="table">
+        <table class="table table-secondary table-hover">
           <thead>
             <tr>
               <th>Data</th>
@@ -125,7 +125,9 @@
             </tr>
           </thead>
 
-          <tbody>
+          <tbody id="lista_despesas">
+            <tr>
+            </tr>
           </tbody>
         </table>
       </div>

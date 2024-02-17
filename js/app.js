@@ -1,5 +1,5 @@
-class Despesa { 
-    constructor (ano, mes, dia, tipo, descricao, valor) {
+class Despesa {
+    constructor(ano, mes, dia, tipo, descricao, valor) {
         this.ano = ano;
         this.mes = mes;
         this.dia = dia;
@@ -8,7 +8,7 @@ class Despesa {
         this.valor = valor;
     }
 
-    validarDados(){
+    validarDados() {
         for (let i in this) {
             if (this[i] == undefined || this[i] == '' || this[i] == null) {
                 return false;
@@ -20,14 +20,14 @@ class Despesa {
 
 class Bd {
 
-    constructor (){
+    constructor() {
         let id = localStorage.getItem('id');
 
         if (id === null) {
             localStorage.setItem('id', 0)
         }
     }
-    getProximoId(){
+    getProximoId() {
         let proximoId = localStorage.getItem('id')
         return parseInt(proximoId) + 1
     }
@@ -37,12 +37,12 @@ class Bd {
         localStorage.setItem('id', id);
     }
 
-    recuperarRegistros(){
+    recuperarRegistros() {
         let id = localStorage.getItem('id');
         let despesas = [];
         for (let i = 1; i <= id; i++) {
             let despesa = JSON.parse(localStorage.getItem(i));
-            if (i === null){
+            if (i === null) {
                 continue;
             }
             despesas.push(despesa);
@@ -54,20 +54,20 @@ class Bd {
 let bd = new Bd();
 
 function cadastrarDespesa() {
-    
+
     let ano = document.getElementById('ano');
     let mes = document.getElementById('mes');
-    let tipo = document.getElementById('tipo');
     let dia = document.getElementById('dia');
+    let tipo = document.getElementById('tipo');
     let descricao = document.getElementById('descricao');
     let valor = document.getElementById('valor');
 
-    let despesa = new Despesa (
+    let despesa = new Despesa(
         ano.value,
         mes.value,
         dia.value,
-        descricao.value,
         tipo.value,
+        descricao.value,
         valor.value
     )
 
@@ -76,7 +76,34 @@ function cadastrarDespesa() {
 
 
 function carregarListaDespesas() {
-    bd.recuperarRegistros()
+    let despesas = [];
+    despesas = bd.recuperarRegistros();
+    var listaDespesas = document.getElementById('lista_despesas');
+
+    despesas.forEach(function (d) {
+        let row = listaDespesas.insertRow();
+
+        row.insertCell(0).innerHTML = `${d.dia}/${d.mes}/${d.ano}`;
+
+        switch (d.tipo) {
+            case '1': d.tipo = 'Alimentação';
+                break;
+            case '2': d.tipo = 'Educação'; 
+                break;
+            case '3': d.tipo = 'Lazer'; 
+                break;
+            case '4': d.tipo = 'Saúde'; 
+                break;
+            case '5': d.tipo = 'TRansporte'; 
+                break;
+        }
+        row.insertCell(1).innerHTML = d.tipo;
+        row.insertCell(2).innerHTML = d.descricao;
+        row.insertCell(3).innerHTML = d.valor;
+
+
+    })
+
 }
 
 function gravar(despesa) {
